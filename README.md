@@ -4,7 +4,7 @@
 
 ## Description
 
-These are set of examples using W25Q64 flash memory for writing and reading data.
+This a library for using W25Q64 flash memory for writing, reading, and clear data.
 
 Thanks to Catoblepas for making this documentation possible.
 
