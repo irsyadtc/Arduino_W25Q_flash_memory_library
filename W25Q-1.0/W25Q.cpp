@@ -14,7 +14,6 @@ W25Q::W25Q()
   SPI.begin();
   SPI.setDataMode(0);
   SPI.setBitOrder(MSBFIRST);
-  g_command_ready = false;
 }
 
 
