@@ -6,26 +6,27 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-W25Q	KEYWORD1
-read_buffer KEYWORD1
+W25Q		KEYWORD1
+read_buffer	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
-not_busy	KEYWORD2
-_get_jedec_id	KEYWORD2
+not_busy		KEYWORD2
+_get_jedec_id		KEYWORD2
 print_page_bytes	KEYWORD2
-get_jedec_id	KEYWORD2
-_chip_erase	KEYWORD2
-chip_erase	KEYWORD2
-_read_page	KEYWORD2
-read_page	KEYWORD2
-read_all_pages	KEYWORD2
+get_jedec_id		KEYWORD2
+_chip_erase		KEYWORD2
+chip_erase		KEYWORD2
+_read_page		KEYWORD2
+read_page		KEYWORD2
+read_all_pages		KEYWORD2
 _read_page_internal	KEYWORD2
-_write_page	KEYWORD2
-write_byte	KEYWORD2
-printBuffer	KEYWORD2
+_write_page		KEYWORD2
+write_byte		KEYWORD2
+printBuffer		KEYWORD2
+getLastByte		KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

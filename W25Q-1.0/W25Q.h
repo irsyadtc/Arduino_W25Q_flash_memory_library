@@ -40,10 +40,9 @@ class W25Q
     void _write_page(word page_number, byte *page_buffer);
     void write_byte(word page, byte offset, byte databyte);
     void printBuffer(void);
+    byte getLastByte(void);
 
   private:
-    boolean g_command_ready;
-    String g_command;
     byte read_buffer[256];
 
 };

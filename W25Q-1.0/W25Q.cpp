@@ -128,6 +128,24 @@ void W25Q::read_all_pages(void) {
   }
 }
 
+void W25Q::_read_page_internal(word page_number, byte *page_buffer) {
+  digitalWrite(SS, HIGH);
+  digitalWrite(SS, LOW);
+  SPI.transfer(WB_READ_DATA);
+  // Construct the 24-bit address from the 16-bit page
+  // number and 0x00, since we will read 256 bytes (one
+  // page).
+  SPI.transfer((page_number >> 8) & 0xFF);
+  SPI.transfer((page_number >> 0) & 0xFF);
+  SPI.transfer(0);
+
+  for (int i = 0; i < 256; ++i) {
+    page_buffer[i] = SPI.transfer(0);
+  }
+  digitalWrite(SS, HIGH);
+  not_busy();
+}
+
 /*
    See the timing diagram in section 9.2.21 of the
    data sheet, "Page Program (02h)".
@@ -147,8 +165,8 @@ void W25Q::_write_page(word page_number, byte *page_buffer) {
   }
   digitalWrite(SS, HIGH);
   
-  for (int i = 0; i < 256; ++i){
-  }
+//  for (int i = 0; i < 256; ++i){
+//  }
   
   
   /* See notes on rev 2
@@ -159,23 +177,7 @@ void W25Q::_write_page(word page_number, byte *page_buffer) {
   not_busy();
 }
 
-void W25Q::_read_page_internal(word page_number, byte *page_buffer) {
-  digitalWrite(SS, HIGH);
-  digitalWrite(SS, LOW);
-  SPI.transfer(WB_READ_DATA);
-  // Construct the 24-bit address from the 16-bit page
-  // number and 0x00, since we will read 256 bytes (one
-  // page).
-  SPI.transfer((page_number >> 8) & 0xFF);
-  SPI.transfer((page_number >> 0) & 0xFF);
-  SPI.transfer(0);
 
-  for (int i = 0; i < 256; ++i) {
-    page_buffer[i] = SPI.transfer(0);
-  }
-  digitalWrite(SS, HIGH);
-  not_busy();
-}
 
 void W25Q::write_byte(word page, byte offset, byte databyte) {
   char buf[80];
@@ -186,6 +188,10 @@ void W25Q::write_byte(word page, byte offset, byte databyte) {
   _write_page(page, page_data);
 }
 
+
+/*****************************************************
+ *  print out the value on read_buffer
+ *****************************************************/
 void W25Q::printBuffer(void) {
 	for(int i=0; i<255; i++)
 	{
@@ -195,5 +201,21 @@ void W25Q::printBuffer(void) {
 			break;
 	}
 	Serial.println();
+}
+
+/*****************************************************
+ *  get the value of the last byte on read_buffer
+ *****************************************************/
+byte W25Q::getLastByte(void) {
+    byte mark = 0;
+    for(int i=0; i<255; i++)
+    {
+            if(read_buffer[i] == 255)
+                {
+                    mark = read_buffer[i-1];
+                    break;
+                }
+    }
+    return mark;
 }
 
