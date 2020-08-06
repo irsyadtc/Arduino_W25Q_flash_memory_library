@@ -39,11 +39,33 @@ class W25Q
     void _read_page_internal(word page_number, byte *page_buffer);
     void _write_page(word page_number, byte *page_buffer);
     void write_byte(word page, byte offset, byte databyte);
-    void printBuffer(void);
-    byte getLastByte(void);
 
-  private:
+    void printBuffer(void);
+    void findEmptyPage(uint8_t block_no);
+    void printBufferHex(void);
+
+    void clearContent(void);
+
+    unsigned int getFree_page_directory();
+    byte getLastByte(void);
+    byte getRead_buffer(uint8_t b);
+    byte getFirst_byte() const;
+    byte getSecond_byte() const;
+    byte getContent(uint8_t index);
+    uint8_t getContent_size(void);
+
+    void setFree_page_directory(unsigned int value);
+
+
+
+private:
     byte read_buffer[256];
+    byte first_byte;
+    byte second_byte;
+    byte content[254];
+    byte content_size;
+    unsigned int free_page_directory;
+
 
 };
 #endif
