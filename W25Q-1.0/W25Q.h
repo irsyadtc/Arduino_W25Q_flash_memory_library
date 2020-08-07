@@ -45,6 +45,7 @@ class W25Q
     void printBufferHex(void);
 
     void clearContent(void);
+    void extractContent(void);
 
     unsigned int getFree_page_directory();
     byte getLastByte(void);
@@ -55,8 +56,6 @@ class W25Q
     uint8_t getContent_size(void);
 
     void setFree_page_directory(unsigned int value);
-
-
 
 private:
     byte read_buffer[256];

@@ -106,28 +106,28 @@ void W25Q::_read_page(word page_number, byte *page_buffer) {
 
   for (int i = 0; i < 256; ++i) {
     page_buffer[i] = SPI.transfer(0);
-    //Serial.print(page_buffer[i]);
+//    Serial.print(page_buffer[i]);
   }
   digitalWrite(SS, HIGH);
   not_busy();
-  //Serial.println();
+//  Serial.println();
 
-  first_byte = page_buffer[0];      //extract first byte
-  second_byte = page_buffer[1];     //extract second byte
-  clearContent();
-  for(uint8_t i=2; i<256 ;i++)    //extract content
-  {
-      if(read_buffer[i] == 0xFF){
-          content_size = i-2;   //calc content size
-          break;
-      }
-      else{
-          content[i-2] = read_buffer[i];
-          if(i ==255)
-              content_size = i-2;
-      }
+//  first_byte = page_buffer[0];      //extract first byte
+//  second_byte = page_buffer[1];     //extract second byte
+//  clearContent();
+//  for(uint8_t i=2; i<256 ;i++)    //extract content
+//  {
+//      if(read_buffer[i] == 0xFF){
+//          content_size = i-2;   //calc content size
+//          break;
+//      }
+//      else{
+//          content[i-2] = read_buffer[i];
+//          if(i ==255)
+//              content_size = i-2;
+//      }
 
-  }
+//  }
 
 }
 
@@ -209,15 +209,12 @@ void W25Q::write_byte(word page, byte offset, byte databyte) {
 
 
 /*****************************************************
- *  print out the value on read_buffer
+ *  print out the value on read_buffer (raw)
  *****************************************************/
 void W25Q::printBuffer(void) {
 	for(int i=0; i<255; i++)
 	{
-		if(read_buffer[i] != 255)
-			Serial.print(char(read_buffer[i]));
-		else
-			break;
+            Serial.print(char(read_buffer[i]));
 	}
 	Serial.println();
 }
@@ -335,4 +332,24 @@ void W25Q::clearContent()
     {
         content[i] = 0;
     }
+}
+
+void W25Q::extractContent()
+{
+      first_byte = read_buffer[0];      //extract first byte
+      second_byte = read_buffer[1];     //extract second byte
+      clearContent();
+      for(uint8_t i=2; i<256 ;i++)    //extract content
+      {
+          if(read_buffer[i] == 0xFF){
+              content_size = i-2;   //calc content size
+              break;
+          }
+          else{
+              content[i-2] = read_buffer[i];
+              if(i ==255)
+                  content_size = i-2;
+          }
+
+      }
 }
