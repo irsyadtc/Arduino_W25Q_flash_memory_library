@@ -8,6 +8,11 @@
 
 W25Q		KEYWORD1
 read_buffer	KEYWORD1
+first_byte	KEYWORD1
+second_byte	KEYWORD1
+content		KEYWORD1
+content_size	KEYWORD1
+free_page_directory	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
@@ -27,6 +32,17 @@ _write_page		KEYWORD2
 write_byte		KEYWORD2
 printBuffer		KEYWORD2
 getLastByte		KEYWORD2
+findEmptyPage		KEYWORD2
+printBufferHex		KEYWORD2
+clearContent		KEYWORD2
+extractContent		KEYWORD2
+getFree_page_directory	KEYWORD2
+getRead_buffer		KEYWORD2
+getFirst_byte		KEYWORD2
+getSecond_byte		KEYWORD2
+getContent		KEYWORD2
+getContent_size		KEYWORD2
+setFree_page_directory	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

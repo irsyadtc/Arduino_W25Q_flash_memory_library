@@ -28,14 +28,7 @@ void W25Q::not_busy(void)
 }
 
 
-void W25Q::print_page_bytes(byte *page_buffer) {
-  char buf[10];
-  for (int i = 0; i < 16; ++i) {
-    for (int j = 0; j < 16; ++j) {
-      sprintf(buf, "%02x", page_buffer[i * 16 + j]);
-    }
-  }
-}
+
 
 void W25Q::_get_jedec_id(byte *b1, byte *b2, byte *b3) {
   digitalWrite(SS, HIGH);
@@ -89,6 +82,9 @@ void W25Q::chip_erase(void) {
   _chip_erase();
 }
 
+/**************************************************
+ *  READ
+ *************************************************/
 /*
    See the timing diagram in section 9.2.10 of the
    data sheet, "Read Data (03h)".
@@ -110,25 +106,6 @@ void W25Q::_read_page(word page_number, byte *page_buffer) {
   }
   digitalWrite(SS, HIGH);
   not_busy();
-//  Serial.println();
-
-//  first_byte = page_buffer[0];      //extract first byte
-//  second_byte = page_buffer[1];     //extract second byte
-//  clearContent();
-//  for(uint8_t i=2; i<256 ;i++)    //extract content
-//  {
-//      if(read_buffer[i] == 0xFF){
-//          content_size = i-2;   //calc content size
-//          break;
-//      }
-//      else{
-//          content[i-2] = read_buffer[i];
-//          if(i ==255)
-//              content_size = i-2;
-//      }
-
-//  }
-
 }
 
 void W25Q::read_page(unsigned int page_number) {
@@ -165,6 +142,10 @@ void W25Q::_read_page_internal(word page_number, byte *page_buffer) {
 
 }
 
+
+/**************************************************
+ *  WRITE
+ *************************************************/
 /*
    See the timing diagram in section 9.2.21 of the
    data sheet, "Page Program (02h)".
@@ -207,6 +188,19 @@ void W25Q::write_byte(word page, byte offset, byte databyte) {
   _write_page(page, page_data);
 }
 
+
+/**************************************************
+ *  PRINT
+ *************************************************/
+
+void W25Q::print_page_bytes(byte *page_buffer) {
+  char buf[10];
+  for (int i = 0; i < 16; ++i) {
+    for (int j = 0; j < 16; ++j) {
+      sprintf(buf, "%02x", page_buffer[i * 16 + j]);
+    }
+  }
+}
 
 /*****************************************************
  *  print out the value on read_buffer (raw)
